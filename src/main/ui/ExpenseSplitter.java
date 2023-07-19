@@ -1,19 +1,17 @@
 package ui;
 
 import model.Expense;
-import model.ExpenseTracker;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Main {
-    ExpenseTracker expenseList;
+public class ExpenseSplitter {
 
-    public static void main(String[] args) {
+    public ExpenseSplitter() {
         splitExpense();
     }
 
-    public static void splitExpense() {
+    public void splitExpense() {
         Scanner console = new Scanner(System.in);
         System.out.println("What was the total cost?");
         int cost = console.nextInt();
@@ -39,4 +37,3 @@ public class Main {
         Expense expense = new Expense(cost, splitCost);
     }
 }
-
