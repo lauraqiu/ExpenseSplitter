@@ -4,12 +4,14 @@ package model;
 public class Expense {
     private final int initExpense;
     private final int splitExpense;
+    private final String name;
 
     // pass in cost
     // constructor
-    public Expense(int initExpense, int splitExpense) {
+    public Expense(int initExpense, int splitExpense, String name) {
         this.initExpense = initExpense;
         this.splitExpense = splitExpense;
+        this.name = name;
     }
 
     public int getInitExpense() {
@@ -20,4 +22,7 @@ public class Expense {
         return splitExpense;
     }
 
+    public String getName() {
+        return name;
+    }
 }
