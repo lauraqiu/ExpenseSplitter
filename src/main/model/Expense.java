@@ -18,7 +18,7 @@ public class Expense {
     // REQUIRES: totalCost and numPeople > 0
     // EFFECTS: returns the split cost of an expense
     public double splitCost(double totalCost, int numPeople) {
-        return totalCost / numPeople;
+        return (double) Math.round((totalCost / numPeople) * (int) Math.pow(10, 1)) / (int) Math.pow(10, 1);
     }
 
     // EFFECTS: returns the total cost of an expense

@@ -19,13 +19,14 @@ public class ExpenseList {
 
     // REQUIRES: name is a valid string
     // EFFECTS: deletes an expense from the list of expenses
-    public void deleteExpense(String name) {
+    public boolean deleteExpense(String name) {
         for (int i = 0; i < expenseList.size(); i++) {
             if (expenseList.get(i).getName().equalsIgnoreCase(name)) {
                 expenseList.remove(i);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     // EFFECTS: returns the number of expenses stored in the list of expenses

@@ -13,9 +13,9 @@ public class ExpenseSplitterApp {
         runApp();
     }
 
+    @SuppressWarnings("methodlength")
     public void runApp() {
         ExpenseList expenseList = new ExpenseList();
-        System.out.println("Hello, what would you like to do?");
 
         while (true) {
             System.out.println("Enter a to add an expense to split, d to delete an split expense, "
@@ -29,8 +29,11 @@ public class ExpenseSplitterApp {
             } else if (choice.equalsIgnoreCase("d")) {
                 System.out.println("Please enter the name of the expense you would like to delete");
                 String name = console.nextLine();
-                expenseList.deleteExpense(name);
-                System.out.println("The expense " + name + " has been deleted");
+                if (expenseList.deleteExpense(name)) {
+                    System.out.println("The expense " + name.toLowerCase() + " has been deleted");
+                } else {
+                    System.out.println("Expense not found!");
+                }
             } else if (choice.equalsIgnoreCase("v")) {
                 viewExpense(expenseList);
             } else if (choice.equalsIgnoreCase("q")) {
