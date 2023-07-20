@@ -9,10 +9,12 @@ import java.util.Scanner;
 public class ExpenseSplitterApp {
     static Scanner console = new Scanner(System.in);
 
+    // EFFECTS: creates a new Expense Splitter App and runs it
     public ExpenseSplitterApp() {
         runApp();
     }
 
+    // EFFECTS: asks user what they want to do on the app ex. add, delete, view expenses, or quit
     @SuppressWarnings("methodlength")
     public void runApp() {
         ExpenseList expenseList = new ExpenseList();
