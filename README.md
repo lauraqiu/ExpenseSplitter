@@ -16,6 +16,6 @@ and this application would be a good way to keep track of the shared expenses.
 ## User Stories
 
 - As a user, I want to be able to add an expense and input its amount.
-- As a user, I want to be able to choose the people involved in each expense.
+- As a user, I want to be able to choose the number of people involved in each expense.
 - As a user, I want to be able to calculate the amount each person owes per expense.
-- As a user, I want to be able to edit expenses and delete them when they are resolved.
+- As a user, I want to be able to view expenses and delete them when they are resolved.

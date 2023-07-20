@@ -12,9 +12,8 @@ public class Main {
     public static void main(String[] args) {
         ExpenseList expenseList = new ExpenseList();
         System.out.println("Hello, what would you like to do?");
-        boolean quit = false;
 
-        while (!quit) {
+        while (true) {
             System.out.println("Enter a to add an expense to split, d to delete an split expense, "
                     + "or v to view your split expense tracker or q to quit: ");
             String choice = console.nextLine();
@@ -27,16 +26,12 @@ public class Main {
                 System.out.println("Please enter the name of the expense you would like to delete");
                 String name = console.nextLine();
                 expenseList.deleteExpense(name);
-                System.out.println("The expense " + name + "has been deleted");
+                System.out.println("The expense " + name + " has been deleted");
             } else if (choice.equalsIgnoreCase("v")) {
-                for (int i = 0; i < expenseList.getSize(); i++) {
-                    System.out.println("Your expense " + expenseList.getExpense(i).getName() + " had a total of $"
-                            + expenseList.getExpense(i).getInitExpense() + ". Each person owes $"
-                            + expenseList.getExpense(i).getSplitExpense());
-                }
+                expenseList.viewExpense();
             } else if (choice.equalsIgnoreCase("q")) {
                 System.out.println("Exiting program");
-                quit = true;
+                break;
             }
         }
     }
@@ -46,18 +41,18 @@ public class Main {
         String name = console.nextLine();
 
         System.out.println("What was the total cost?");
-        int cost = console.nextInt();
+        double cost = console.nextDouble();
         console.nextLine();
 
         System.out.println("How many people do you want to split it between?");
         int numPeople = console.nextInt();
         console.nextLine();
 
-        int splitCost = cost / numPeople;
+        Expense expense = new Expense(cost, numPeople, name);
         System.out.println("Expense name: " + name);
-        System.out.println("Each person owes: $" + splitCost);
+        System.out.println("Each person owes: $" + expense.splitCost(cost, numPeople));
 
-        return new Expense(cost, splitCost, name);
+        return expense;
     }
 }
 

@@ -2,24 +2,28 @@ package model;
 
 // expense object
 public class Expense {
-    private final int initExpense;
-    private final int splitExpense;
+    private final double totalCost;
+    private final int numPeople;
     private final String name;
 
     // pass in cost
     // constructor
-    public Expense(int initExpense, int splitExpense, String name) {
-        this.initExpense = initExpense;
-        this.splitExpense = splitExpense;
+    public Expense(double totalCost, int numPeople, String name) {
+        this.totalCost = totalCost;
+        this.numPeople = numPeople;
         this.name = name;
     }
 
-    public int getInitExpense() {
-        return initExpense;
+    public double splitCost(double totalCost, int numPeople) {
+        return totalCost / numPeople;
     }
 
-    public int getSplitExpense() {
-        return splitExpense;
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public int getNumPeople() {
+        return numPeople;
     }
 
     public String getName() {

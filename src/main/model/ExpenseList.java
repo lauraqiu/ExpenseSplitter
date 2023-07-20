@@ -14,14 +14,11 @@ public class ExpenseList {
     }
 
     public void deleteExpense(String name) {
-        int i = 0;
-        boolean found = false;
-        while (i < expenseList.size() && (!found)) {
+        for (int i = 0; i < expenseList.size(); i++) {
             if (expenseList.get(i).getName().equalsIgnoreCase(name)) {
                 expenseList.remove(i);
-                found = true;
+                break;
             }
-            i++;
         }
     }
 
@@ -31,5 +28,17 @@ public class ExpenseList {
 
     public int getSize() {
         return expenseList.size();
+    }
+
+    public void viewExpense() {
+        for (int i = 0; i < expenseList.size(); i++) {
+            Expense expense = expenseList.get(i);
+            String name = expense.getName();
+            double totalCost = expense.getTotalCost();
+            int numPeople = expense.getNumPeople();
+            double splitCost = expense.splitCost(totalCost, numPeople);
+            System.out.println("Your expense " + name + " had a total of $" + totalCost
+                    + " split between " + numPeople + " people. Each person owes $" + splitCost);
+        }
     }
 }
