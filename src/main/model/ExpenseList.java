@@ -22,15 +22,16 @@ public class ExpenseList {
         }
     }
 
-    public Expense getExpense(int i) {
-        return expenseList.get(i);
-    }
-
     public int getSize() {
         return expenseList.size();
     }
 
+    public Expense getExpense(int i) {
+        return expenseList.get(i);
+    }
+
     public void viewExpense() {
+        System.out.println("You have added " + expenseList.size() + " expense(s)");
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.get(i);
             String name = expense.getName();

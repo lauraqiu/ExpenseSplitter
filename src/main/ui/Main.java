@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Main {
     static Scanner console = new Scanner(System.in);
 
-    @SuppressWarnings("methodlength")
     public static void main(String[] args) {
         ExpenseList expenseList = new ExpenseList();
         System.out.println("Hello, what would you like to do?");
