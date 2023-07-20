@@ -14,7 +14,7 @@ public class ExpenseTest {
     @BeforeEach
     void RunBefore() {
         e1 = new Expense(20, 10, "sushi");
-        e2 = new Expense(10, 2, "pizza takeout");
+        e2 = new Expense(10, 3, "pizza takeout");
         e3 = new Expense(50, 5, "car rental");
     }
 
@@ -28,7 +28,7 @@ public class ExpenseTest {
     @Test
     public void testSplitExpense() {
         assertEquals(2.0, e1.splitCost(e1.getTotalCost(), e1.getNumPeople()));
-        assertEquals(5.0, e2.splitCost(e2.getTotalCost(), e2.getNumPeople()));
+        assertEquals(3.3, e2.splitCost(e2.getTotalCost(), e2.getNumPeople()));
         assertEquals(10.0, e3.splitCost(e3.getTotalCost(), e3.getNumPeople()));
     }
 
@@ -42,7 +42,7 @@ public class ExpenseTest {
     @Test
     public void testGetNumPeople() {
         assertEquals(10, e1.getNumPeople());
-        assertEquals(2, e2.getNumPeople());
+        assertEquals(3, e2.getNumPeople());
         assertEquals(5, e3.getNumPeople());
     }
 
