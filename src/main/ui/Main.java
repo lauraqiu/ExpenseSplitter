@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Main {
     static Scanner console = new Scanner(System.in);
 
-
     public static void main(String[] args) {
         ExpenseList expenseList = new ExpenseList();
         System.out.println("Hello, what would you like to do?");
@@ -58,6 +57,7 @@ public class Main {
         return expense;
     }
 
+    // EFFECTS: prints statements that tell the user information about each expense on the list of expenses
     public static void viewExpense(ExpenseList expenseList) {
         System.out.println("You have added " + expenseList.getSize() + " expense(s)");
         for (int i = 0; i < expenseList.getSize(); i++) {

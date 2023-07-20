@@ -70,8 +70,33 @@ public class ExpenseListTest {
     }
 
     @Test
+    public void testDeleteExpenseNonExistent(){
+        li1.deleteExpense("nonexistent");
+
+        assertEquals(e1, li1.getExpense(0));
+    }
+
+    @Test
     public void testGetSize() {
-        assertEquals(3, li3.getSize());
         assertEquals(0, li0.getSize());
+        assertEquals(1, li1.getSize());
+        assertEquals(2, li2.getSize());
+        assertEquals(3, li3.getSize());
+    }
+
+    @Test
+    public void testGetSizeAddOne() {
+        assertEquals(0, li0.getSize());
+
+        li0.addExpense(e1);
+
+        assertEquals(1, li0.getSize());
+    }
+
+    @Test
+    public void testGetExpense() {
+        assertEquals(e1, li3.getExpense(0));
+        assertEquals(e2, li3.getExpense(1));
+        assertEquals(e3, li3.getExpense(2));
     }
 }
