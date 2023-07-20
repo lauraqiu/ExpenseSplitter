@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// tests the methods in the ExpenseList Class
 public class ExpenseListTest {
     Expense e1;
     Expense e2;
