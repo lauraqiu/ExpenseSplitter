@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner console = new Scanner(System.in);
 
+
     public static void main(String[] args) {
         ExpenseList expenseList = new ExpenseList();
         System.out.println("Hello, what would you like to do?");
@@ -28,7 +29,7 @@ public class Main {
                 expenseList.deleteExpense(name);
                 System.out.println("The expense " + name + " has been deleted");
             } else if (choice.equalsIgnoreCase("v")) {
-                expenseList.viewExpense();
+                viewExpense(expenseList);
             } else if (choice.equalsIgnoreCase("q")) {
                 System.out.println("Exiting program");
                 break;
@@ -55,6 +56,19 @@ public class Main {
         System.out.println("Each person owes: $" + expense.splitCost(cost, numPeople));
 
         return expense;
+    }
+
+    public static void viewExpense(ExpenseList expenseList) {
+        System.out.println("You have added " + expenseList.getSize() + " expense(s)");
+        for (int i = 0; i < expenseList.getSize(); i++) {
+            Expense expense = expenseList.getExpense(i);
+            String name = expense.getName();
+            double totalCost = expense.getTotalCost();
+            int numPeople = expense.getNumPeople();
+            double splitCost = expense.splitCost(totalCost, numPeople);
+            System.out.println("Your expense " + name + " had a total of $" + totalCost
+                    + " split between " + numPeople + " people. Each person owes $" + splitCost);
+        }
     }
 }
 

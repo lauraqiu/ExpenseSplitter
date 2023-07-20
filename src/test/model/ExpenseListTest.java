@@ -74,46 +74,4 @@ public class ExpenseListTest {
         assertEquals(3, li3.getSize());
         assertEquals(0, li0.getSize());
     }
-
-    @Test
-    public void testViewExpenseOne() {
-        assertEquals("You have added 1 expense(s)", "You have added " + li1.getSize()
-                + " expense(s)");
-
-        assertEquals("Your expense sushi had a total of $20.0 split between 10 people. Each person owes $2.0",
-                "Your expense " + li1.getExpense(0).getName() + " had a total of $"
-                        + li1.getExpense(0).getTotalCost() + " split between " + li1.getExpense(0).getNumPeople()
-                        + " people. Each person owes $"
-                        + li1.getExpense(0).splitCost(li1.getExpense(0).getTotalCost(),
-                        li1.getExpense(0).getNumPeople()));
-    }
-
-    @Test
-    public void testViewExpenseMultiple() {
-
-        assertEquals("You have added 2 expense(s)", "You have added " + li2.getSize()
-                + " expense(s)");
-
-        assertEquals("Your expense sushi had a total of $20.0 split between 10 people. Each person owes $2.0",
-                "Your expense " + li2.getExpense(0).getName() + " had a total of $"
-                        + li2.getExpense(0).getTotalCost() + " split between " + li2.getExpense(0).getNumPeople()
-                        + " people. Each person owes $"
-                        + li2.getExpense(0).splitCost(li2.getExpense(0).getTotalCost(),
-                        li2.getExpense(0).getNumPeople()));
-
-        assertEquals("Your expense pizza takeout had a total of $10.0 split between 2 people. " +
-                        "Each person owes $5.0", "Your expense " + li2.getExpense(1).getName()
-                        + " had a total of $" + li2.getExpense(1).getTotalCost() + " split between "
-                        + li2.getExpense(1).getNumPeople() + " people. Each person owes $"
-                        + li2.getExpense(1).splitCost(li2.getExpense(1).getTotalCost(),
-                        li2.getExpense(1).getNumPeople()));
-
-//        assertEquals("Your expense car rental had a total of $50.0 split between 5 people. Each person " +
-//                        "owes $10.0", "Your expense " + li3.getExpense(0).getName() + " had a total of $"
-//                        + li3.getExpense(0).getTotalCost() + " split between " + li3.getExpense(0).getNumPeople()
-//                        + " people. Each person owes $"
-//                        + li3.getExpense(0).splitCost(li3.getExpense(0).getTotalCost(),
-//                        li3.getExpense(0).getNumPeople()));
-    }
-
 }

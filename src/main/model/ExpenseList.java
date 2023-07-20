@@ -37,18 +37,4 @@ public class ExpenseList {
     public Expense getExpense(int i) {
         return expenseList.get(i);
     }
-
-    // EFFECTS: prints statements detailing each expense in the list of expenses
-    public void viewExpense() {
-        System.out.println("You have added " + expenseList.size() + " expense(s)");
-        for (int i = 0; i < expenseList.size(); i++) {
-            Expense expense = expenseList.get(i);
-            String name = expense.getName();
-            double totalCost = expense.getTotalCost();
-            int numPeople = expense.getNumPeople();
-            double splitCost = expense.splitCost(totalCost, numPeople);
-            System.out.println("Your expense " + name + " had a total of $" + totalCost
-                    + " split between " + numPeople + " people. Each person owes $" + splitCost);
-        }
-    }
 }
