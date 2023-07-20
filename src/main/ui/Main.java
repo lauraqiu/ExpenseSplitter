@@ -5,6 +5,7 @@ import model.ExpenseList;
 
 import java.util.Scanner;
 
+// runs application, allows user to select from adding a new expense, deleting an expense, viewing existing expenses
 public class Main {
     static Scanner console = new Scanner(System.in);
 
@@ -35,6 +36,8 @@ public class Main {
         }
     }
 
+    // REQUIRES: console inputs are > 0 or valid strings for name
+    // EFFECTS: returns an expense object and prints the expense name and how much each person owes
     public static Expense splitExpense() {
         System.out.println("Enter the name of the expense:");
         String name = console.nextLine();
