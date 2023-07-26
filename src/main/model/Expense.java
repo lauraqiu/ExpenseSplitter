@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writeable;
+
 // holds information about an expense's total cost, number of people involved, and name of expense
 // also splits expense according to the cost and number of people involved
-public class Expense {
+public class Expense implements Writeable {
     private final double totalCost;
     private final int numPeople;
     private final String name;
@@ -34,5 +37,14 @@ public class Expense {
     // EFFECTS: returns the name of an expense
     public String getName() {
         return name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("total cost", totalCost);
+        json.put("number of people", numPeople);
+        json.put("name", name);
+        return json;
     }
 }
