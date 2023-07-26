@@ -1,0 +1,19 @@
+{
+  "expenses": [
+    {
+      "name": "Sushi",
+      "totalCost": 40,
+      "numPeople": 2
+    },
+    {
+      "name": "Car Rental",
+      "totalCost": 100,
+      "numPeople": 5
+    },
+    {
+      "name": "Flight tickets",
+      "totalCost": 500,
+      "numPeople": 3
+    }
+  ]
+}

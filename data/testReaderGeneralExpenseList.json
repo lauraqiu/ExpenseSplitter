@@ -1,0 +1,19 @@
+{
+  "expenses": [
+    {
+      "name": "Dinner",
+      "totalCost": 75.5,
+      "numPeople": 3
+    },
+    {
+      "name": "Movie",
+      "totalCost": 30.0,
+      "numPeople": 2
+    },
+    {
+      "name": "Groceries",
+      "totalCost": 120.25,
+      "numPeople": 4
+    }
+  ]
+}
