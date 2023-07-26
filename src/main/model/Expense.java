@@ -1,3 +1,6 @@
+// The following code is taken from the Thingy class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/model/Thingy.java
+
 package model;
 
 import org.json.JSONObject;
@@ -39,6 +42,8 @@ public class Expense implements Writeable {
         return name;
     }
 
+    // EFFECTS: Converts the Expense object to a JSON representation and returns JSON object representing
+    // the Expense object with its total cost, number of people, and expense name
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

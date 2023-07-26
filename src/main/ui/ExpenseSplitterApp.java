@@ -1,3 +1,6 @@
+// The following code is taken from the WorkRoomApp class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
+
 package ui;
 
 import model.Expense;
@@ -53,12 +56,16 @@ public class ExpenseSplitterApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds an expense to the list
     public void addExpense() {
         Expense expense = splitExpense();
         expenseList.addExpense(expense);
         System.out.println("Your expense has been split and added to the expense tracker");
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes an expense from the list
     public void deleteExpense() {
         System.out.println("Please enter the name of the expense you would like to delete");
         String name = console.nextLine();
@@ -104,6 +111,7 @@ public class ExpenseSplitterApp {
         return expense;
     }
 
+    // EFFECTS: saves the expense list to file
     private void saveExpenseList() {
         try {
             jsonWriter.open();

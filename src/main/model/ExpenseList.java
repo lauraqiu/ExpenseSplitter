@@ -1,3 +1,6 @@
+// The following code is taken from the WorkRoom class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/model/WorkRoom.java
+
 package model;
 
 import org.json.JSONArray;
@@ -43,6 +46,9 @@ public class ExpenseList implements Writeable {
         return expenseList.get(i);
     }
 
+
+    // EFFECTS: Converts the ExpenseList object to a JSON representation and returns JSON object
+    // representing the ExpenseList object with a list of expenses
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -50,7 +56,7 @@ public class ExpenseList implements Writeable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this expense list as a JSON array
     private JSONArray thingiesToJson() {
         JSONArray jsonArray = new JSONArray();
 

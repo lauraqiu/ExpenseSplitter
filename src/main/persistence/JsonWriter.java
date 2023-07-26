@@ -1,3 +1,6 @@
+// The following code is taken from the JsonWriter class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/persistence/JsonWriter.java
+
 package persistence;
 
 import model.ExpenseList;
@@ -24,7 +27,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of expense list to file
     public void write(ExpenseList li) {
         JSONObject json = li.toJson();
         saveToFile(json.toString(TAB));

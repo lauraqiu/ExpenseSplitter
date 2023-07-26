@@ -1,3 +1,6 @@
+// The following code is taken from the JsonReaderTest class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/test/persistence/JsonReaderTest.java
+
 package persistence;
 
 import model.Expense;
@@ -8,6 +11,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// tests methods in JsonReader
 class JsonReaderTest extends JsonTest {
 
     @Test

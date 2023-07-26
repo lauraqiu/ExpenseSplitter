@@ -1,3 +1,6 @@
+// The following code is taken from the JsonWriterTest class in the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/test/persistence/JsonWriterTest.java
+
 package persistence;
 
 import model.Expense;
@@ -10,11 +13,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// tests methods in JsonWriter
 class JsonWriterTest extends JsonTest {
-    // NOTE TO CPSC 210 STUDENTS: the strategy in designing tests for the JsonWriter is to
-    // write data to a file and then use the reader to read it back in and check that we
-    // read in a copy of what was written out.
-
     @Test
     void testWriterInvalidFile() {
         try {
