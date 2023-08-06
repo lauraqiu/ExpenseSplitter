@@ -8,6 +8,7 @@ import model.ExpenseList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -30,30 +31,20 @@ public class ExpenseSplitterApp {
 
     // EFFECTS: asks user what they want to do on the app ex. add, delete, view expenses, or quit
     public void runApp() {
-        System.out.println("Enter l to load a previous expense list or n to start new");
-        if (console.nextLine().equalsIgnoreCase("l")) {
-            loadExpenseList();
-        }
-        while (true) {
-            System.out.println("Enter a to add an expense to split, d to delete an split expense, "
-                    + "or v to view your split expense tracker or q to quit: ");
-            String choice = console.nextLine();
+        SwingUtilities.invokeLater(() -> {
+            boolean loadOption = promptLoadData(); // Prompt user to load data at the start
 
-            if (choice.equalsIgnoreCase("a")) {
-                addExpense();
-            } else if (choice.equalsIgnoreCase("d")) {
-                deleteExpense();
-            } else if (choice.equalsIgnoreCase("v")) {
-                viewExpense(expenseList);
-            } else if (choice.equalsIgnoreCase("q")) {
-                System.out.println("Enter s if you want like to save, otherwise enter any other letter");
-                if (console.nextLine().equalsIgnoreCase("s")) {
-                    saveExpenseList();
-                }
-                System.out.println("Exiting program");
-                break;
+            if (loadOption) {
+                loadExpenseList(); // Load data from file
             }
-        }
+
+            ExpenseSplitterGUI ui = new ExpenseSplitterGUI(expenseList, this);
+            ui.setVisible(true);
+
+            if (ui.shouldQuitApplication()) { // Check if the "Quit" button is clicked
+                promptSaveData(); // Prompt user to save data when the application ends
+            }
+        });
     }
 
     // MODIFIES: this
@@ -112,7 +103,7 @@ public class ExpenseSplitterApp {
     }
 
     // EFFECTS: saves the expense list to file
-    private void saveExpenseList() {
+    public void saveExpenseList() {
         try {
             jsonWriter.open();
             jsonWriter.write(expenseList);
@@ -132,5 +123,21 @@ public class ExpenseSplitterApp {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    // EFFECTS: prompts the user with the option to save data to a file when the application ends
+    private void promptSaveData() {
+        int response = JOptionPane.showConfirmDialog(null,
+                "Do you want to save data to file?", "Save Data", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            saveExpenseList();
+        }
+    }
+
+    // EFFECTS: prompts the user with the option to load data from a file when the application starts
+    private boolean promptLoadData() {
+        int response = JOptionPane.showConfirmDialog(null,
+                "Do you want to load data from file?", "Load Data", JOptionPane.YES_NO_OPTION);
+        return response == JOptionPane.YES_OPTION;
     }
 }
