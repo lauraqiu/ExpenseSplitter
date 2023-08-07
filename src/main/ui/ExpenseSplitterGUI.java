@@ -54,11 +54,11 @@ public class ExpenseSplitterGUI extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (button.getText() == "Add Expense") {
+                if (button.getText().equals("Add Expense")) {
                     addExpense();
-                } else if (button.getText() == "View Expenses") {
+                } else if (button.getText().equals("View Expenses")) {
                     viewExpenses();
-                } else if (button.getText() == "Quit") {
+                } else if (button.getText().equals("Quit")) {
                     quitApplication();
                 }
             }
