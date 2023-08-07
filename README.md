@@ -21,3 +21,16 @@ and this application would be a good way to keep track of the shared expenses.
 - As a user, I want to be able to view the list of expenses to see the details of each expense
 - As a user, I want to be able to save my list of expenses to file if I so choose
 - As a user, I want to be able to load my list of expenses from file if I so choose
+- As a user, as a user, I wanted to be prompted with the option to load data from file when the application starts and prompted with the option to save data to file when the application ends
+- As a user, I want to be able to add multiple expenses to an expense list
+- As a user, I want to be able to pin an important expense
+
+# Instructions for Grader
+
+- when the app is run, you can see the visual component which is the splash screen that is shown before the app loads
+- you can reload the state of my app through the popup that asks if you would like to load a previous file
+- you can add multiple expenses to a list of expenses by entering the expense details in the text fields and clicking the Add Expense button
+- you can view the list of expenses by clicking the View Expenses button
+- you can delete an expense by clicking on an expense and clicking the Delete Expense button
+- you can pin or unpin an expense by clicking an expense and clicking the Pin or Unpin button
+- you can save the state of the app by clicking the Quit button, which will load a popup that asks the user if they would like to save their file
