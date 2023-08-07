@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+// GUI for Expense Splitter App that allows user to interact with the app
 public class ExpenseSplitterGUI extends JFrame {
     private final ExpenseList expenseList;
     private final ExpenseSplitterApp app;
@@ -20,7 +22,7 @@ public class ExpenseSplitterGUI extends JFrame {
     private final JTextField costField;
     private final JTextField numPeopleField;
 
-    private Expense pinnedExpense = null;
+    private ArrayList<Expense> pinnedExpenses = new ArrayList<>();
     private boolean quitApplication = false;
 
     // MODIFIES: expenseList, app
@@ -108,7 +110,6 @@ public class ExpenseSplitterGUI extends JFrame {
     }
 
     // EFFECTS: allows user to view their list of expenses
-    @SuppressWarnings("methodlength")
     public void viewExpenses() {
         while (true) {
             // create an array to store the names and detailed information of expenses
@@ -118,13 +119,14 @@ public class ExpenseSplitterGUI extends JFrame {
             // loops through expense list and gets each expense
             expenseInformation(expenseNames, detailedInfo);
 
-            ExpenseListCellRenderer cellRenderer = new ExpenseListCellRenderer(expenseList, pinnedExpense);
+            // highlights expense if pinned
+            ExpenseListCellRenderer cellRenderer = new ExpenseListCellRenderer(expenseList, pinnedExpenses);
 
             // Create a JList with the custom cell renderer
             JList<String> expenseListJList = new JList<>(expenseNames);
             expenseListJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            // Set the custom cell renderer
+            // allows custom renderer to render items in list
             expenseListJList.setCellRenderer(cellRenderer);
 
             // create a panel that allows user to scroll through expense names
@@ -175,13 +177,14 @@ public class ExpenseSplitterGUI extends JFrame {
     // EFFECTS: allows user to view detailed information about an expense and pin or delete it
     private void handleSelectedExpense(int selectedIndex, String selectedExpenseName, StringBuilder detailedInfo) {
         int option;
-        String[] options = {"Pin", "Delete", "Cancel"};
+        String[] options;
 
-        // if the selected expense is pinned, change the "pin" button to "unpin"
-        if (pinnedExpense != null && pinnedExpense.getName().equals(selectedExpenseName)) {
-            options[0] = "Unpin";
+        // if the selected expense is pinned, have "pin" button, otherwise, have "unpin" button
+        if (pinnedExpenses.contains(expenseList.getExpense(selectedIndex))) {
+            options = new String[]{"Unpin", "Delete", "Cancel"};
+        } else {
+            options = new String[]{"Pin", "Delete", "Cancel"};
         }
-
         // shows user information detailed information about the expense and the buttons from options
         option = JOptionPane.showOptionDialog(this,
                 detailedInfo.toString(), selectedExpenseName,
@@ -198,16 +201,17 @@ public class ExpenseSplitterGUI extends JFrame {
         }
     }
 
+    // MODIFIES: pinnedExpenses
     // EFFECTS: allows user to pin or unpin an expense
     private void pinExpense(int selectedIndex) {
         if (selectedIndex >= 0 && selectedIndex < expenseList.getSize()) {
             Expense selectedExpense = expenseList.getExpense(selectedIndex);
-            if (pinnedExpense != null && pinnedExpense.equals(selectedExpense)) {
-                // Unpin the expense
-                pinnedExpense = null;
+            if (pinnedExpenses.contains(selectedExpense)) {
+                // If the expense is already pinned, unpin it
+                pinnedExpenses.remove(selectedExpense);
             } else {
-                // Pin the expense
-                pinnedExpense = selectedExpense;
+                // If the expense is not pinned, pin it
+                pinnedExpenses.add(selectedExpense);
             }
         }
     }

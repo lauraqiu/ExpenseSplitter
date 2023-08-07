@@ -15,8 +15,8 @@ import java.io.IOException;
 public class ExpenseSplitterApp {
     private ExpenseList expenseList;
     private static final String JSON_STORE = "./data/expenseList.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
     // EFFECTS: creates a new Expense Splitter App and runs it
     public ExpenseSplitterApp() {
