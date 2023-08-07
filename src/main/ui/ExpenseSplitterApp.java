@@ -3,6 +3,7 @@
 
 package ui;
 
+import model.Expense;
 import model.ExpenseList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+import java.util.Scanner;
 
 // runs application, allows user to select from adding a new expense, deleting an expense, viewing existing expenses
 public class ExpenseSplitterApp {
@@ -24,9 +26,11 @@ public class ExpenseSplitterApp {
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
     private boolean splashScreenShown = false;
+    static Scanner console;
 
     // EFFECTS: creates a new Expense Splitter App and runs it
     public ExpenseSplitterApp() {
+        console = new Scanner(System.in);
         expenseList = new ExpenseList();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -60,6 +64,59 @@ public class ExpenseSplitterApp {
                 promptSaveData();
             }
         });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds an expense to the list
+    public void addExpense() {
+        Expense expense = splitExpense();
+        expenseList.addExpense(expense);
+        System.out.println("Your expense has been split and added to the expense tracker");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deletes an expense from the list
+    public void deleteExpense(Expense expense) {
+        if (expenseList.deleteExpense(expense.getName())) {
+            System.out.println("The expense " + expense.getName() + " has been deleted");
+        } else {
+            System.out.println("Expense not found!");
+        }
+    }
+
+    // EFFECTS: prints statements that tell the user information about each expense on the list of expenses
+    public static void viewExpense(ExpenseList expenseList) {
+        System.out.println("You have added " + expenseList.getSize() + " expense(s)");
+        for (int i = 0; i < expenseList.getSize(); i++) {
+            Expense expense = expenseList.getExpense(i);
+            String name = expense.getName();
+            double totalCost = expense.getTotalCost();
+            int numPeople = expense.getNumPeople();
+            double splitCost = expense.splitCost(totalCost, numPeople);
+            System.out.println("Your expense " + name + " had a total of $" + totalCost
+                    + " split between " + numPeople + " people. Each person owes $" + splitCost);
+        }
+    }
+
+    // REQUIRES: console inputs are > 0 or valid strings for name
+    // EFFECTS: returns an expense object and prints the expense name and how much each person owes
+    public static Expense splitExpense() {
+        System.out.println("Enter the name of the expense:");
+        String name = console.nextLine();
+
+        System.out.println("What was the total cost?");
+        double cost = console.nextDouble();
+        console.nextLine();
+
+        System.out.println("How many people do you want to split it between?");
+        int numPeople = console.nextInt();
+        console.nextLine();
+
+        Expense expense = new Expense(cost, numPeople, name);
+        System.out.println("Expense name: " + name);
+        System.out.println("Each person owes: $" + expense.splitCost(cost, numPeople));
+
+        return expense;
     }
 
     // EFFECTS: saves the expense list to file
