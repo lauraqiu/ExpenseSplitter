@@ -9,16 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ExpenseSplitterGUI extends JFrame {
-    private ExpenseList expenseList;
-    private ExpenseSplitterApp app;
-    private JPanel inputPanel;
-    private JPanel outputPanel;
-    private JPanel buttonPanel;
-    private JTextField nameField;
-    private JTextField costField;
-    private JTextField numPeopleField;
-    private boolean quitApplication = false;
+    private final ExpenseList expenseList;
+    private final ExpenseSplitterApp app;
+
+    private final JPanel inputPanel;
+    private final JPanel outputPanel;
+    private final JPanel buttonPanel;
+
+    private final JTextField nameField;
+    private final JTextField costField;
+    private final JTextField numPeopleField;
+
     private Expense pinnedExpense = null;
+    private boolean quitApplication = false;
 
     // MODIFIES: expenseList, app
     // EFFECTS: creates main panel, allowing user to add an expense, view expenses, or quit
@@ -105,6 +108,7 @@ public class ExpenseSplitterGUI extends JFrame {
     }
 
     // EFFECTS: allows user to view their list of expenses
+    @SuppressWarnings("methodlength")
     public void viewExpenses() {
         while (true) {
             // create an array to store the names and detailed information of expenses
@@ -114,10 +118,14 @@ public class ExpenseSplitterGUI extends JFrame {
             // loops through expense list and gets each expense
             expenseInformation(expenseNames, detailedInfo);
 
-            // creates a JList to display the expense names to the user
-            // can select one item at a time
+            ExpenseListCellRenderer cellRenderer = new ExpenseListCellRenderer(expenseList, pinnedExpense);
+
+            // Create a JList with the custom cell renderer
             JList<String> expenseListJList = new JList<>(expenseNames);
             expenseListJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+            // Set the custom cell renderer
+            expenseListJList.setCellRenderer(cellRenderer);
 
             // create a panel that allows user to scroll through expense names
             JScrollPane scrollPane = new JScrollPane(expenseListJList);
