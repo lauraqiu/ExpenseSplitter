@@ -18,6 +18,7 @@ public class ExpenseSplitterGUI extends JFrame {
     private JTextField costField;
     private JTextField numPeopleField;
     private boolean quitApplication = false;
+    private Expense pinnedExpense = null;
 
     @SuppressWarnings("methodlength")
     public ExpenseSplitterGUI(ExpenseList expenseList, ExpenseSplitterApp app) {
@@ -146,13 +147,32 @@ public class ExpenseSplitterGUI extends JFrame {
                 int selectedIndex = expenseListJList.getSelectedIndex();
                 if (selectedIndex != -1) {
                     String selectedExpenseName = expenseNames[selectedIndex];
-                    int deleteChoice = JOptionPane.showConfirmDialog(this,
-                            detailedInfo[selectedIndex].toString() + "\n\nDo you want to delete this expense?",
-                            "Delete Expense", JOptionPane.YES_NO_OPTION);
+                    Expense selectedExpense = expenseList.getExpense(selectedIndex);
 
-                    if (deleteChoice == JOptionPane.YES_OPTION) {
+                    String[] options = {"Pin", "Delete", "Cancel"};
+                    int option;
+                    if (pinnedExpense != null && pinnedExpense.equals(selectedExpense)) {
+                        // Expense is already pinned, show "Unpin" option
+                        option = JOptionPane.showOptionDialog(this,
+                                detailedInfo[selectedIndex].toString(), selectedExpenseName,
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null, new Object[]{"Unpin", "Delete", "Cancel"}, "Unpin");
+                    } else {
+                        // Expense is not pinned, show "Pin" option
+                        option = JOptionPane.showOptionDialog(this,
+                                detailedInfo[selectedIndex].toString(), selectedExpenseName,
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null, options, "Pin");
+                    }
+
+                    if (option == 0) {
+                        // Pin or Unpin the expense
+                        pinExpense(selectedIndex);
+                    } else if (option == 1) {
+                        // Delete the expense
                         deleteExpense(selectedExpenseName);
-                        break; // Exit the loop after deleting the expense
+                    } else {
+                        // Cancel, do nothing
                     }
                 }
             } else {
@@ -160,9 +180,6 @@ public class ExpenseSplitterGUI extends JFrame {
             }
         }
     }
-
-
-
 
     private void clearInputFields() {
         nameField.setText("");
@@ -182,5 +199,20 @@ public class ExpenseSplitterGUI extends JFrame {
             app.saveExpenseList(); // Call saveExpenseList() from the ExpenseSplitterApp instance
         }
         System.exit(0); // Quit the application
+    }
+
+    private void pinExpense(int selectedIndex) {
+        if (selectedIndex >= 0 && selectedIndex < expenseList.getSize()) {
+            Expense selectedExpense = expenseList.getExpense(selectedIndex);
+            if (pinnedExpense != null && pinnedExpense.equals(selectedExpense)) {
+                // Unpin the expense
+                pinnedExpense = null;
+            } else {
+                // Pin the expense
+                pinnedExpense = selectedExpense;
+            }
+            // Refresh the view
+            viewExpenses();
+        }
     }
 }
