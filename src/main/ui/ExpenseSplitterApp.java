@@ -7,9 +7,15 @@ import model.ExpenseList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 
 // runs application, allows user to select from adding a new expense, deleting an expense, viewing existing expenses
 public class ExpenseSplitterApp {
@@ -17,6 +23,7 @@ public class ExpenseSplitterApp {
     private static final String JSON_STORE = "./data/expenseList.json";
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
+    private boolean splashScreenShown = false;
 
     // EFFECTS: creates a new Expense Splitter App and runs it
     public ExpenseSplitterApp() {
@@ -26,20 +33,31 @@ public class ExpenseSplitterApp {
         runApp();
     }
 
-    // EFFECTS: asks user what they want to do on the app ex. add, delete, view expenses, or quit
+    // EFFECTS: shows splashscreen, loads and saves file, lets user use app functions
     public void runApp() {
-        SwingUtilities.invokeLater(() -> {
-            boolean loadOption = promptLoadData(); // Prompt user to load data at the start
+        showSplashScreen(3000);
 
-            if (loadOption) {
-                loadExpenseList(); // Load data from file
+        // Wait until the splash screen is closed before proceeding
+        while (splashScreenShown) {
+            try {
+                Thread.sleep(100); // Sleep for a short duration
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+        }
 
+        // if user wants to load previous file
+        if (promptLoadData()) {
+            loadExpenseList();
+        }
+
+        SwingUtilities.invokeLater(() -> {
             ExpenseSplitterGUI ui = new ExpenseSplitterGUI(expenseList, this);
             ui.setVisible(true);
 
-            if (ui.shouldQuitApplication()) { // Check if the "Quit" button is clicked
-                promptSaveData(); // Prompt user to save data when the application ends
+            // prompts user to save data
+            if (ui.shouldQuitApplication()) {
+                promptSaveData();
             }
         });
     }
@@ -81,5 +99,46 @@ public class ExpenseSplitterApp {
         int response = JOptionPane.showConfirmDialog(null,
                 "Do you want to load data from file?", "Load Data", JOptionPane.YES_NO_OPTION);
         return response == JOptionPane.YES_OPTION;
+    }
+
+    // EFFECTS: displays splash screen
+    @SuppressWarnings("methodlength")
+    private void showSplashScreen(int duration) {
+        JWindow splashScreen = new JWindow();
+        try {
+            InputStream inputStream = ExpenseSplitterApp.class.getResourceAsStream("./expenseSplitterImage.png");
+            BufferedImage originalImage = ImageIO.read(inputStream);
+
+            // Scale the original image to the desired size
+            Image scaledImage = originalImage.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+
+            ImageIcon imageIcon = new ImageIcon(scaledImage);
+            JLabel imageLabel = new JLabel(imageIcon); /// displays image
+            splashScreen.getContentPane().add(imageLabel, BorderLayout.CENTER); // centers image
+            splashScreen.pack(); // resize to desired image
+            splashScreen.setLocationRelativeTo(null); // centers splash screen on computer screen
+            splashScreen.setVisible(true); // makes splash screen appear on screen
+
+            // Set a timer to close the splash screen after the specified duration
+            splashScreenDuration(duration, splashScreen);
+        } catch (Exception e) {
+            System.out.println("Unable to load splash screen image: " + e.getMessage());
+            splashScreenShown = false; // In case of an exception, set the flag false to prevent an infinite loop
+        }
+    }
+
+    // EFFECTS: the splash screen is shown for some duration of time
+    public void splashScreenDuration(int duration, JWindow splashScreen) {
+        Timer timer = new Timer(duration, new ActionListener() {
+            @Override
+            // when duration is over:
+            public void actionPerformed(ActionEvent e) {
+                splashScreen.dispose(); // closes splash screen
+                splashScreenShown = false; // indicate that splash screen is closed
+            }
+        });
+        timer.setRepeats(false); // only run the timer once
+        timer.start();
+        splashScreenShown = true; // splash screen is shown
     }
 }
