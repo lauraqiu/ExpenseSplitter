@@ -57,11 +57,9 @@ public class ExpenseSplitterApp {
 
     // MODIFIES: this
     // EFFECTS: deletes an expense from the list
-    public void deleteExpense() {
-        System.out.println("Please enter the name of the expense you would like to delete");
-        String name = console.nextLine();
-        if (expenseList.deleteExpense(name)) {
-            System.out.println("The expense " + name.toLowerCase() + " has been deleted");
+    public void deleteExpense(Expense expense) {
+        if (expenseList.deleteExpense(expense.getName())) {
+            System.out.println("The expense " + expense.getName() + " has been deleted");
         } else {
             System.out.println("Expense not found!");
         }

@@ -51,7 +51,7 @@ public class ExpenseSplitterGUI extends JFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deleteExpense();
+                viewExpenses();
             }
         });
 
@@ -78,7 +78,6 @@ public class ExpenseSplitterGUI extends JFrame {
         inputPanel.add(numPeopleField);
 
         buttonPanel.add(addButton);
-        buttonPanel.add(deleteButton);
         buttonPanel.add(viewButton);
         buttonPanel.add(quitButton);
 
@@ -105,41 +104,65 @@ public class ExpenseSplitterGUI extends JFrame {
         clearInputFields();
     }
 
-    public void deleteExpense() {
-        String name = nameField.getText();
+    public void deleteExpense(String name) {
         if (expenseList.deleteExpense(name)) {
             JOptionPane.showMessageDialog(this, "The expense " + name + " has been deleted",
                     "Expense Deleted", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Expense not found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        clearInputFields();
     }
 
     @SuppressWarnings("methodlength")
     public void viewExpenses() {
-        StringBuilder expensesInfo = new StringBuilder();
-        for (int i = 0; i < expenseList.getSize(); i++) {
-            Expense expense = expenseList.getExpense(i);
-            String name = expense.getName();
-            double totalCost = expense.getTotalCost();
-            int numPeople = expense.getNumPeople();
-            double splitCost = expense.splitCost(totalCost, numPeople);
-            expensesInfo.append("Your expense ").append(name).append(" had a total of $").append(totalCost)
-                    .append(" split between ").append(numPeople).append(" people. Each person owes $").append(splitCost)
-                    .append("\n");
+        while (true) {
+            String[] expenseNames = new String[expenseList.getSize()];
+            StringBuilder[] detailedInfo = new StringBuilder[expenseList.getSize()];
+
+            for (int i = 0; i < expenseList.getSize(); i++) {
+                Expense expense = expenseList.getExpense(i);
+                expenseNames[i] = expense.getName();
+
+                // Create detailed information for each expense
+                double totalCost = expense.getTotalCost();
+                int numPeople = expense.getNumPeople();
+                double splitCost = expense.splitCost(totalCost, numPeople);
+                detailedInfo[i] = new StringBuilder();
+                detailedInfo[i].append("Expense: ").append(expense.getName()).append("\n")
+                        .append("Total Cost: $").append(totalCost).append("\n")
+                        .append("Number of People: ").append(numPeople).append("\n")
+                        .append("Split Cost: $").append(splitCost).append("\n");
+            }
+
+            JList<String> expenseListJList = new JList<>(expenseNames);
+            expenseListJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+            JScrollPane scrollPane = new JScrollPane(expenseListJList);
+
+            int choice = JOptionPane.showConfirmDialog(this, scrollPane,
+                    "Select an expense to view:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (choice == JOptionPane.OK_OPTION) {
+                int selectedIndex = expenseListJList.getSelectedIndex();
+                if (selectedIndex != -1) {
+                    String selectedExpenseName = expenseNames[selectedIndex];
+                    int deleteChoice = JOptionPane.showConfirmDialog(this,
+                            detailedInfo[selectedIndex].toString() + "\n\nDo you want to delete this expense?",
+                            "Delete Expense", JOptionPane.YES_NO_OPTION);
+
+                    if (deleteChoice == JOptionPane.YES_OPTION) {
+                        deleteExpense(selectedExpenseName);
+                        break; // Exit the loop after deleting the expense
+                    }
+                }
+            } else {
+                break; // Exit the loop if the user clicks "Cancel" or closes the window
+            }
         }
-
-        JTextArea textArea = new JTextArea(expensesInfo.toString());
-        textArea.setEditable(false);
-
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(400, 300));
-
-        JOptionPane.showMessageDialog(this, scrollPane, "View Expenses", JOptionPane.INFORMATION_MESSAGE);
-
     }
+
+
+
 
     private void clearInputFields() {
         nameField.setText("");
