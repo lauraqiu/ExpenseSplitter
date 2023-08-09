@@ -26,7 +26,6 @@ public class ExpenseSplitterGUI extends JFrame {
 
     private ArrayList<Expense> pinnedExpenses = new ArrayList<>();
     private boolean quitApplication = false;
-    private EventLog events;
 
     // MODIFIES: expenseList, app
     // EFFECTS: creates main panel, allowing user to add an expense, view expenses, or quit
@@ -245,7 +244,7 @@ public class ExpenseSplitterGUI extends JFrame {
         if (response == JOptionPane.YES_OPTION) {
             app.saveExpenseList();
         }
-        events = EventLog.getInstance();
+        EventLog events = EventLog.getInstance();
         for (Event e: events) {
             System.out.println(e.getDescription());
         }

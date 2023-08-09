@@ -26,11 +26,10 @@ public class ExpenseSplitterApp {
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
     private boolean splashScreenShown = false;
-    static Scanner console;
+    static Scanner console = new Scanner(System.in);
 
     // EFFECTS: creates a new Expense Splitter App and runs it
     public ExpenseSplitterApp() {
-        console = new Scanner(System.in);
         expenseList = new ExpenseList();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
