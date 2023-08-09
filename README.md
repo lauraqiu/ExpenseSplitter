@@ -33,11 +33,11 @@ and this application would be a good way to keep track of the shared expenses.
 - you can reload the state of my app through the popup that appears after the splash screen that asks if you would like to load a previous file
 
 ## Phase 4: Task 2
-Loaded from ./data/expenseList.json
-Saved to ./data/expenseList.json
-New expense added to expense list
-Expense deleted to expense list
-New expense added to expense list
+- Loaded from ./data/expenseList.json
+- Saved to ./data/expenseList.json
+- New expense added to expense list
+- Expense deleted to expense list
+- New expense added to expense list
 
 ## Phase 4: Task 3
 I would refactor the ExpenseSplitterGUI class because currently there are many methods in the class, as a result, the 
