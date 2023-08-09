@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 // tests the methods in the ExpenseList Class
 public class ExpenseListTest {
@@ -15,6 +15,8 @@ public class ExpenseListTest {
     ExpenseList li1;
     ExpenseList li2;
     ExpenseList li3;
+
+    Event event = null;
 
     @BeforeEach
     void RunBefore() {
@@ -35,6 +37,26 @@ public class ExpenseListTest {
         li3.addExpense(e1);
         li3.addExpense(e2);
         li3.addExpense(e3);
+    }
+
+    @Test
+    public void testAddExpenseTrueLogExpenseAddition() {
+        li0.setLogExpenseAddition(true);
+        li0.addExpense(e1);
+
+        for (Event e: EventLog.getInstance()) {
+            event = e;
+        }
+
+        assertEquals("New expense added to expense list", event.getDescription());
+    }
+
+    @Test
+    public void testAddExpenseFalseLogExpenseAddition() {
+        li0.setLogExpenseAddition(false);
+        li0.addExpense(e1);
+
+        assertTrue(event == null);
     }
 
     @Test
