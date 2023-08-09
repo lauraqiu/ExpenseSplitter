@@ -38,3 +38,16 @@ Saved to ./data/expenseList.json
 New expense added to expense list
 Expense deleted to expense list
 New expense added to expense list
+
+## Phase 4: Task 3
+I would refactor the ExpenseSplitterGUI class because currently there are many methods in the class, as a result, the 
+class handles multiple responsibilities. As well, it has many fields. This makes it confusing for other users to understand
+and makes it more difficult to find where a bug may be occurring. It would be better to adhere to the Single Responsibility 
+Principle and break up the class into separate classes. To do this, I would move the functionalities and related fields 
+into a new class. As a result, each class would handle a separate responsibility, such as setting up the GUI and handling the 
+add and delete and view expenses functions.
+
+As well, I would refactor the ExpenseSplitterApp as well because it also has clusters of methods that perform different functionalities.
+Similarly, this reduces cohesion and makes the code harder to understand and debug as well. I would move the functionalities 
+and related fields into new classes. For example, I could have a separate class that handles the console interactions with the user,
+a class that handles the splash screen, and a class that handles the Json data. 
