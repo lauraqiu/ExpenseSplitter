@@ -12,6 +12,7 @@ import java.util.ArrayList;
 // holds a list of expenses, can add, delete, or view expenses
 public class ExpenseList implements Writeable {
     private ArrayList<Expense> expenseList;
+    private boolean logExpenseAddition = false; // prevent logging event when JsonReader is called
 
     // EFFECTS: constructs a new list of expenses
     public ExpenseList() {
@@ -22,6 +23,9 @@ public class ExpenseList implements Writeable {
     // EFFECTS: adds an expense to the list of expenses
     public void addExpense(Expense expense) {
         expenseList.add(expense);
+        if (logExpenseAddition) {
+            EventLog.getInstance().logEvent(new Event("New expense added to expense list"));
+        }
     }
 
     // REQUIRES: name is a valid string
@@ -30,6 +34,7 @@ public class ExpenseList implements Writeable {
         for (int i = 0; i < expenseList.size(); i++) {
             if (expenseList.get(i).getName().equalsIgnoreCase(name)) {
                 expenseList.remove(i);
+                EventLog.getInstance().logEvent(new Event("Expense deleted to expense list"));
                 return true;
             }
         }
@@ -46,6 +51,9 @@ public class ExpenseList implements Writeable {
         return expenseList.get(i);
     }
 
+    public void setLogExpenseAddition(boolean value) {
+        logExpenseAddition = value;
+    }
 
     // EFFECTS: Converts the ExpenseList object to a JSON representation and returns JSON object
     // representing the ExpenseList object with a list of expenses

@@ -60,6 +60,7 @@ public class JsonReader {
         double totalCost = jsonObject.getDouble("total cost");
         int numPeople = jsonObject.getInt("number of people");
         Expense expense = new Expense(totalCost, numPeople, name);
+        li.setLogExpenseAddition(false);
         li.addExpense(expense);
     }
 }

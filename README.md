@@ -31,3 +31,10 @@ and this application would be a good way to keep track of the shared expenses.
 - you can locate the visual component as the splash screen that is shown before the app loads
 - you can save the state of the app by clicking the Quit button, which will load a popup that asks the user if they would like to save their file
 - you can reload the state of my app through the popup that appears after the splash screen that asks if you would like to load a previous file
+
+## Phase 4: Task 2
+Loaded from ./data/expenseList.json
+Saved to ./data/expenseList.json
+New expense added to expense list
+Expense deleted to expense list
+New expense added to expense list

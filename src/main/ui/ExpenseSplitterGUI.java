@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Expense;
 import model.ExpenseList;
 
@@ -24,6 +26,7 @@ public class ExpenseSplitterGUI extends JFrame {
 
     private ArrayList<Expense> pinnedExpenses = new ArrayList<>();
     private boolean quitApplication = false;
+    private EventLog events;
 
     // MODIFIES: expenseList, app
     // EFFECTS: creates main panel, allowing user to add an expense, view expenses, or quit
@@ -103,6 +106,7 @@ public class ExpenseSplitterGUI extends JFrame {
         int numPeople = Integer.parseInt(numPeopleField.getText());
 
         Expense expense = new Expense(cost, numPeople, name);
+        expenseList.setLogExpenseAddition(true);
         expenseList.addExpense(expense);
         JOptionPane.showMessageDialog(this, "Your expense has been split and added to "
                         + "the expense tracker", "Expense Added", JOptionPane.INFORMATION_MESSAGE);
@@ -240,6 +244,10 @@ public class ExpenseSplitterGUI extends JFrame {
                 "Do you want to save data before quitting?", "Save Data", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
             app.saveExpenseList();
+        }
+        events = EventLog.getInstance();
+        for (Event e: events) {
+            System.out.println(e.getDescription());
         }
         System.exit(0); // Quit the application
     }
